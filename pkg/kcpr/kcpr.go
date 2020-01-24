@@ -4,8 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 )
+
+const kcprUrl = "https://streamdb8web.securenetsystems.net/player_status_update/KCPR1.xml"
+
+type Requester interface {
+	Get(string) (*http.Response, error)
+}
 
 //A Track groups the currently
 //played track's artist, song title, and album
@@ -33,3 +40,14 @@ func (t Track) Json() (string, error) {
 	parsedString := strings.TrimSuffix(b.String(), "\n")
 	return parsedString, nil
 }
+
+// func SendRequest(r Requester, url string) (*http.Response, error) {
+// 	return r.Get(url)
+// }
+
+// func GetCurrentTrack(r Requester) (Track, error) {
+// 	resp, err := SendRequest(http, kcprUrl)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// }
