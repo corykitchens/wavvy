@@ -30,7 +30,7 @@ var trackJsonTestCases = []struct {
 }{
 	{
 		track: Track{"King Gizzard and the Lizard Wizard", "Cyboogie", "Fishing for Fishes"},
-		want:  "{\"artist\": \"King Gizzard and the Lizard Wizard\", \"title\": \"Cyboogie\", \"album\": \"Fishing for Fishes\"}",
+		want:  `{"artist":"King Gizzard and the Lizard Wizard","title":"Cyboogie","album":"Fishing for Fishes"}`,
 	},
 }
 
@@ -63,7 +63,10 @@ func TestTrackString(t *testing.T) {
 func TestTrackJson(t *testing.T) {
 	for _, tt := range trackJsonTestCases {
 		track := Track{Artist: tt.track.Artist, Title: tt.track.Title, Album: tt.track.Album}
-		got := track.Json()
+		got, err := track.Json()
+		if err != nil {
+			t.Errorf("Error: %v", err)
+		}
 		assertEqual(t, got, tt.want)
 	}
 }

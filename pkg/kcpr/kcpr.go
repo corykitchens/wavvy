@@ -1,6 +1,11 @@
 package kcpr
 
-import "fmt"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
 //A Track groups the currently
 //played track's artist, song title, and album
@@ -18,7 +23,13 @@ func (t Track) String() string {
 
 //Json method returns the track as json
 //{artist: <artist_name>, title: <song_title>, album: <album_title> }
-func (t Track) Json() string {
-
-	return ""
+func (t Track) Json() (string, error) {
+	b := bytes.Buffer{}
+	encoder := json.NewEncoder(&b)
+	err := encoder.Encode(t)
+	if err != nil {
+		return "", err
+	}
+	parsedString := strings.TrimSuffix(b.String(), "\n")
+	return parsedString, nil
 }
