@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/corykitchens/wavvy/pkg/kcpr"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	fmt.Println(kcpr.GetCurrentTrack())
 }
